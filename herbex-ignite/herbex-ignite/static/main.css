@@ -175,6 +175,12 @@ input{
 .generats{
   display: none;
 }
+.loading{
+  display: block;
+}
+.error_msz{
+  display: none;
+}
 .popup{
 position: fixed;
 left: 0;

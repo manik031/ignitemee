@@ -126,13 +126,19 @@ function validate() {
 const loginPopup = document.querySelector(".popup");
 const close = document.querySelector(".close");
 var loading = document.getElementById("loading");
+var display_error = document.getElementById("display_error");
 var generats = document.getElementById("generats");
+var ok_button = document.getElementById("ok_button");
 // Close the popup
 close.addEventListener("click", function () {
     loginPopup.classList.remove("show");
     location.reload();
 });
 
+ok_button.addEventListener("click", function () {
+    loginPopup.classList.remove("show");
+    location.reload();
+});
 function generateImage() {
     // Get the input image file
     var gender = document.querySelector('input[name="gender"]:checked');
@@ -165,15 +171,18 @@ function generateImage() {
     })
         .then((response) => response.json())
         .then((data) => {
+            // disappeared loading indicator
+            loading.style.display = "none";
             // Display the generated images 1
             var generatedImagesElement_1 =document.getElementById("generate_img_1");
             generatedImagesElement_1.innerHTML = "";
-            console.log(data)
+
             // Display the generated images 2
             var generatedImagesElement_2 =document.getElementById("generate_img_2");
             generatedImagesElement_2.innerHTML = "";
             if (data.success) {
                 if (data.data != null) {
+                    generats.style.display = "block";
                     var imageElement_1 = document.createElement("img");
                     var imageElement_2 = document.createElement("img");
 
@@ -182,9 +191,6 @@ function generateImage() {
 
                     window.img1_url = data.data[2];
                     // window.img2_url = data.data[3];
-
-                    loading.style.display = "none";
-                    generats.style.display = "block";
                     
                     imageElement_1.src = "data:image/png;base64,"+data.data[0];
                     
@@ -201,6 +207,8 @@ function generateImage() {
                 }
             } else {
                 // Display error message
+
+                display_error.style.display = "block";
                 var errorMessage = document.createElement("p");
                 errorMessage.textContent = data.error;
                 console.log(errorMessage);
