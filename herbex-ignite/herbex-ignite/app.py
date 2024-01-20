@@ -276,3 +276,5 @@ def generate_image():
         logger.exception("An error occurred during image generation: %s", e)
         return jsonify({'success': False, 'error': str(e)}), 500
     
+if __name__ == '__main__':
+    app.run(debug=False )
